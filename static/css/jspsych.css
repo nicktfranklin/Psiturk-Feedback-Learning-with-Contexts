@@ -1,0 +1,338 @@
+/*
+ * CSS for jsPsych experiments.
+ *
+ * This stylesheet provides minimal styling to make jsPsych
+ * experiments look polished without any additional styles.
+ *
+ */
+
+/*
+ *
+ * fonts and type
+ *
+ */
+
+@import url(//fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
+
+html {
+ font-family: 'Open Sans', 'Arial', sans-serif;
+ font-size: 18px;
+ line-height: 1.6em;
+ background: white;
+ color: black;
+}
+
+p {
+    clear:both;
+}
+
+.very-small {
+    font-size: 50%;
+}
+
+.small {
+    font-size: 75%;
+}
+
+.large {
+    font-size: 125%;
+}
+
+.very-large {
+    font-size: 150%;
+}
+
+/*
+ *
+ * Classes for changing location of things
+ *
+ */
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.center-content {
+    text-align: center;
+}
+
+/*
+ *
+ * Form elements like input fields and buttons
+ *
+ */
+
+input[type="text"] {
+    font-family: 'Open Sans', 'Arial', sans-sefif;
+    font-size: 14px;
+}
+
+button {
+    padding: 0.5em;
+    background-color: #eaeaea;
+    border: 2px solid black;
+    color: black;
+    font-family: 'Open Sans', 'Arial', sans-serif;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+button:hover {
+    border:1px solid #ccc;
+}
+
+/*
+ *
+ * Container holding jsPsych content
+ *
+ */
+
+.jspsych-display-element {
+    width: 800px;
+    margin: 50px auto 50px auto;
+}
+
+#jpsych-target {
+    color: white;
+}
+
+/*
+ *
+ * PLUGIN: jspsych-twoAFC
+ *
+ */
+
+.jspsych-twoAFC-prompt {
+    text-align: center;
+    font-size: 40px; 
+}
+
+.jspsych-twoAFC-stimulus {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: black;
+    color: white;
+}
+
+.jspsych-twoAFC-feedback-correct {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: black;
+    color: green;
+    text-align: center;
+    font-size: 70px;
+    margin: 200px auto 50px auto;
+}
+
+.jspsych-twoAFC-feedback-incorrect {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: black;
+    color: red;
+    text-align: center;
+    font-size: 70px;
+    margin: 200px auto 50px auto;
+}
+
+.jspsych-twoAFC-feedback-neutral {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: black;
+    color: gray;
+    text-align: center;
+    font-size: 80px;
+    margin: 200px auto 50px auto;
+}
+
+/*
+ *
+ * PLUGIN: jspsych-single-stim
+ *
+ */
+
+.jspsych-image-border-play {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    color: white;
+    border:8px solid #000000;
+}
+
+.jspsych-image-border-pass {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    color: white;
+    border:8px solid white;
+}
+
+.jspsych-single-stim-prompt {
+    color: #6E6E6E;
+    text-align: center;
+    font-size: 30px; 
+}
+
+.jspsych-single-stim-prompt-purple {
+    text-align: center;
+	color: purple;
+    font-size: 40px;
+}
+
+.jspsych-single-stim-prompt-blue {
+    text-align: center;
+	color: blue;
+    font-size: 40px;
+}
+
+.jspsych-single-stim-stimulus {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    color: white;
+}
+
+.jspsych-single-stim-feedback-correct {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    color: green;
+    text-align: center;
+    font-size: 125px;
+	font-weight: bold;
+    margin: 200px auto 50px auto;
+}
+
+.jspsych-single-stim-feedback-incorrect {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    color: #DA2820;
+    text-align: center;
+    font-size: 125px;
+	font-weight: bold;
+    margin: 200px auto 50px auto;
+}
+
+.jspsych-single-stim-feedback-tooslow {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    color: #DA2820;
+    text-align: center;
+    font-size: 60px;
+	font-weight: bold;
+    margin: 200px auto 50px auto;
+}
+
+.jspsych-single-stim-feedback-neutral {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    color: white;
+    text-align: center;
+    font-size: 70px;
+	font-weight: bold;
+    margin: 200px auto 50px auto;
+}
+
+.jspsych-single-stim-feedback-score {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    color: #6E6E6E;
+    text-align: center;
+    font-size: 30px;
+	font-weight: bold;
+    margin: 210px auto 50px auto;
+}
+
+.jspsych-centered-text {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    color: black;
+    text-align: center;
+    font-size: 150px;
+	font-weight: bold;
+    margin: 200px auto 50px auto;
+}
+
+
+#jspsych-instructions {
+    text-align: center;
+    font-size: 18px; 
+}
+
+.jspsych-instructions-large {
+	text-align: center;
+    font-size: 45px; 
+}
+
+.jspsych-instructions-emphasize {
+	text-align: center;
+    font-style: italic;
+    font-size: 18px; 
+}
+
+.jspsych-instructions-leftaligned {
+    text-align: left;
+    font-size: 18px; 
+}
+
+.jspsych-instructions-image {
+	display: block;
+    margin-left: auto;
+    margin-right: auto;  
+}
+
+.jspsych-instructions-image-top {
+	display: block;
+	position: relative;
+	top: -20px;
+    margin-left: auto;
+    margin-right: auto;  
+}
+
+/*
+ *
+ * PLUGIN: jspsych-survey-text
+ *
+ */
+
+ .jspsych-likert-tick-text {  
+    font-size: 25px;
+ }
+
+ .jspsych-likert-question-text {
+	margin-left: auto;
+    margin-right: auto;     
+    font-size: 20px;
+ }
+ 
+  .jspsych-survey-likert {
+	margin: auto auto auto auto;
+ }
+ 
+   .jspsych-likert-button {
+	position: relative;
+	top: 50px;
+ }
+
+ 

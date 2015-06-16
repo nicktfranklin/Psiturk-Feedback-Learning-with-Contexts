@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+  <head>
+        <title>MBSL Task</title>
+         <!-- Load jQuery -->
+        <script src="../static/js/jQuery/jquery-min.js"></script>
+         
+        <!-- jsPsych -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="/static/js/jsPsych-4.1/jspsych.js"></script>
+        <script src="/static/js/jsPsych-4.1/plugins/jspsych-text.js"></script>
+        <script src="/static/js/jsPsych-4.1/plugins/jspsych-single-stim.js"></script>
+        <script src="/static/js/jsPsych-4.1/plugins/jspsych-survey-likert.js"></script>
+
+        <!-- custom plug-ins -->
+        <script src="../static/js/jspsych-bandit-wo-feedback.js"></script>
+        
+        <!-- Required for Likert survey -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/black-tie/jquery-ui.min.css" rel="stylesheet" type="text/css"></link>
+
+        <!-- style -->
+        <link href="/static/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+        <link href="/static/js/jsPsych-4.1/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+
+        <!-- libraries used in your experiment 
+            psiturk specifically depends on underscore.js, backbone.js and jquery
+        -->
+        <script src="/static/lib/jquery-min.js" type="text/javascript"> </script>
+        <script src="/static/lib/underscore-min.js" type="text/javascript"> </script>
+        <script src="/static/lib/backbone-min.js" type="text/javascript"> </script>
+        <script src="/static/lib/d3.v3.min.js" type="text/javascript"> </script>
+
+        <!-- psiturk -->
+        <script type="text/javascript">
+            // These fields provided by the psiTurk Server
+            var uniqueId = "{{ uniqueId }}"; // a unique string identifying the worker/task
+            var adServerLoc = "{{ adServerLoc }}"; // the location of your ad (so you can send user back at end of experiment)
+            var mode = "{{ mode }}"; // is this running live, sandbox, or in debug mode?
+        </script>
+        
+        <!-- utils.js and psiturk.js provide the basic psiturk functionality -->
+        <script src="../static/js/utils.js" type="text/javascript"></script>
+        <script src="../static/js/psiturk.js" type="text/javascript"></script>
+        
+  </head>
+  <body>
+      <body>
+        <div id="jspsych-target"></div>
+    </body>
+  </body>
+  <script>
+    /* load psiturk */
+    var psiturk = new PsiTurk(uniqueId, adServerLoc, mode);
+
+    /* define welcome message block  */
+    var welcome_block = {
+        type: "text",
+        text: "<div id='jspsych-instructions'>" + 
+        "<img src='../static/images/university.png', class='jspsych-instructions-image-top'>" +
+        '<p>WELCOME!</p>' + 
+        '<p>Thank you for your participation.<br/><br/></p>' +
+        '<br/><br/><p>[Press ENTER to continue]</p></div>',
+        cont_key: 13,
+        timing_post_trial: 5
+    }; 
+    
+    
+    var game_instructions = {
+      type: "text",
+      text: "<div id='jspsych-instructions'>" + 
+        '<p class="jspsych-instructions-large">INSTRUCTIONS - Part 2</p>' +
+        '</br><p class="jspsych-instructions-leftaligned">' +
+        'Try to win as many points as possible. You will again see a series of colored '+
+        'shapes and respond by pressing a ' + 
+        'button on the keyboard. Each trial will begin with a ' +
+        '"plus" sign (+) followed by a colored shape. Some of the colored shapes will ' +
+        'be familiar. Others, you will not have seen before.</p>' +
+		'<p class="jspsych-instructions-leftaligned">' +
+        '<br/><br/><p>[Press ENTER to continue]</p></div>', 
+      cont_key: 13,
+      timing_post_trial: 5
+    }; 
+
+    var game_instructions_3 = {
+      type: "text",
+      text: "<div id='jspsych-instructions'>" + 
+        '<p class="jspsych-instructions-large">INSTRUCTIONS - Part 2</p>' +
+        '</br><p class="jspsych-instructions-leftaligned">' +
+        'In this section, you can win points depending on how you play the game. ' +
+        'Your goal is to win as many points as possible! Your total score at the end of the ' + 
+        'game will be converted to BONUS PAYMENTS. </p>' +
+        '</br><p class="jspsych-instructions-leftaligned">' +
+        'After each trial you will ' +
+        'see you whether or not you have won points on the round, as well as your' + 
+        ' total score so far. The game varies in length but most people will finish ' +
+        'in roughly 15 minutes</p>' +
+        '<p class="jspsych-instructions-emphasize">GOOD LUCK!</p>' +
+        '<br/><br/><p>[Press ENTER when you are ready to begin the game]</p></div>',
+      cont_key: 13,
+      timing_post_trial: 5
+    }; 
+
+    var game_instructions_2 = {
+      type: "text",
+      text: "<div id='jspsych-instructions'>" + 
+        '<p class="jspsych-instructions-large">INSTRUCTIONS - Part 2</p>' +
+        '<br/>' + 
+		'<p class="jspsych-instructions-leftaligned">' +
+        'You will pick one of the following keys on each trial:</p>' + 
+        '<p>&#34H&#34  &nbsp; &#34J&#34 &nbsp; &#34K&#34 &nbsp; &#34L&#34 </p>' +
+        '<p class="jspsych-instructions-leftaligned">' +
+		'You will have 2 seconds to choose an action before the trial ends. ' +
+        '</p>' +
+        '<br/><br/><p>[Press ENTER to continue]</p></div>', 
+      cont_key: 13,
+      timing_post_trial: 5
+    }; 
+    
+    // /* list feedback images for references  */    
+    // var feedbackImages = ["/static/images/fractal0.png",
+    //         "/static/images/fractal1.png",
+    //         "/static/images/fractal2.png",
+    //         "/static/images/fractal3.png",
+    //         "/static/images/fractal4.png",
+    //         "/static/images/fractal5.png",
+    //         "/static/images/fractal6.png",
+    //         "/static/images/fractal7.png",
+    //         "/static/images/fractal8.png",
+    //         "/static/images/fractal9.png",
+    //         "/static/images/fractal10.png",
+    //         "/static/images/fractal11.png",
+    //         "/static/images/fractal12.png",
+    //         "/static/images/fractal13.png",
+    //         "/static/images/fractal14.png",
+    //         ]
+    
+    // /* Randomize the identiy of feedback images */
+    // feedbackImages = shuffleArray(feedbackImages);
+    
+    /* Randomize the idenity of stimuli */
+    var contextKey = [0,1,2,3,4];
+    contextKey = shuffleArray(contextKey);
+    
+    var stimKey = [0,1,2,3,4];
+    stimKey = shuffleArray(stimKey);
+
+    /* Radomize which dimension is the context */
+    var contextID = [0, 1]
+    contextID = shuffleArray(contextID);
+
+    /* note: actions are randomized prior to importing */ 
+    
+    /* code the response keys */
+    var keyCode = {0: 'H', 1: 'J', 2: 'K', 3: 'L'};
+    var keyCodeNumber = {0: 'h', 1: 'j', 2: 'k', 3: 'l'};
+    var keyDecoder = {72: 0, 74: 1, 75: 2, 76: 3}    
+    
+    /* pick a game to load from file */
+    games = [0,1,2,3,4,5,6,7,8,9];
+    games = shuffleArray(games);
+    
+    // /* Load the pretraining regimen */
+    // var url = '../static/game' + games[0] +'_pretraining.json';
+    // var pretrainingData = [];
+    // $.ajax({
+    //   type: 'GET',
+    //   url: url,
+    //   dataType: 'json',
+    //   success: function(data) { pretrainingData = data;},
+    //   async: false
+    // });
+    
+    /* keep a set of all the images files to preload */
+    preload_set = {};
+    
+    /* Set up the pretraining regimen */
+    var imageMat = [];
+    var outcomeMat = [];
+    var keyResponseMat = [];
+    var promptMat = [];
+    var stimMat = [];
+    var contextMat = [];
+
+        
+    /* load json files for the task (contains trial orders, etc) */
+    var url = '/static/game' + games[0] +'.json';
+    var gameData = [];
+    $.ajax({
+      type: 'GET',
+      url: url,
+      dataType: 'json',
+      success: function(data) { gameData = data;},
+      async: false
+    });
+    
+    // get the number of trials
+    var nTrials = Object.keys(gameData.trials).length;        
+    
+    /* define test block */
+    var imageMat = [];
+    var probMat = [];
+    
+    // var outcomeMat = [];
+    var rewardOutcomes = [];
+    var trialTypeMat = [];
+    var stimMat = [];
+    var contextMat = [];
+    
+    /* loop through the trials and set the stimuli */
+    for (var ii=0; ii<nTrials; ii++) {
+
+    	// store the stimuli and context numbers for easy data analysis
+    	stimMat.push(gameData.trials[ii][0]);
+    	contextMat.push(gameData.trials[ii][1]);
+
+    	// use the predrawn randomization functions to choose the appropriate image with the stimuli.
+        var image = "/static/images/S"+ stimKey[gameData.trials[ii][contextID[0]]] 
+                + "_C" + contextKey[gameData.trials[ii][contextID[1]]] + ".png";
+        imageMat.push(image);
+        preload_set[image] = true; // put the images in the set if it wasn't already there
+
+        probMat.push(1);
+        
+        /* set feedback image IDs */
+        // outcomeMat.push([
+        //                  feedbackImages[gameData.outcomes[ii][0]],
+        //                  feedbackImages[gameData.outcomes[ii][1]],
+        //                  feedbackImages[gameData.outcomes[ii][2]],
+        //                  feedbackImages[gameData.outcomes[ii][3]],
+        // ]);
+        
+        /* set the reward outcomes */
+        rewardOutcomes.push(gameData.rewards[ii]);
+        
+        /* Misc */
+        trialTypeMat.push(gameData.trial_type[ii])        
+    }
+    
+
+    
+    
+    
+    /* Values of winning, losing*/
+    var valueMat = [1, 0];
+
+    var banditTask = {
+            type: 'bandit-wo-feedback',
+            stimuli: stimMat,
+            contexts: contextMat,
+            images_path: imageMat,
+            // outcomes: outcomeMat,
+            rewardOutcomes: rewardOutcomes,
+            value: valueMat,
+            trialType: trialTypeMat,
+            prob: probMat,
+            choices: ['h','j','k','l'],
+            choiceKey: keyDecoder,
+            feedback_display_time: 2000,
+            timing_between_response_and_feedback: 0,
+            timing_iti: 750,
+            timing_max_response_time: 750,
+            continue_after_response: true,
+            show_score: true,
+            prompt: "<p class='jspsych-single-stim-prompt'><br/> Press one of the following keys: <br/><br/> &#34H&#34  &nbsp; &#34J&#34 &nbsp; &#34K&#34 &nbsp; &#34L&#34 </p>",
+    };
+            
+
+     
+    /////////////////////////////////////////////////////////////////////////////////////
+    // Survey at the end
+    var instructions_survey_block1 = {
+        type: "text",
+      	text: function() {
+        	return '<div id="jspsych-instructions">' + 
+	        '<p>Great Job!</p>' +
+	        '<p>You won <strong>' +
+	        getTotalScore() + " Points</strong>! You will recieve a bonus payment" +
+	        ' of &#36;' + getTotalScore()/100.0 + '.</p>' +
+	        '<p>Before we finish, there will be a short voluntary survey.<br/><br/></p>' +
+	        '<p>[Press any key to continue]</p></div>';
+      	}
+    };
+
+    var debrief_block = {
+	  type: "text",
+	  text: function() {
+	    return '<div id="jspsych-instructions">' +
+	        '<p>You won <strong>' +
+	        getTotalScore() + " Points</strong>! You will recieve a bonus payment" +
+	        ' of &#36;' + getTotalScore()/100.0 + '.</p>' +
+	        '<p>Before we finish, there will be a short voluntary survey.<br/><br/></p>' +
+	        '<p>[Press any key to continue]</p></div>';
+	  },
+      cont_key: 13,	
+      timing_post_trial: 5
+	};
+    
+    var instructions_survey_block2 = {
+        type: "text",
+        text: "<div id='jspsych-instructions'>" + 
+        '<p>This survey is completely ANONYMOUS, and information collected is only used for our research purposes.</p>' +
+        '<p>Nevertheless, every question will have an option of "I prefer not to answer".</p>' +
+        '<p>Using your mouse, please move the black cursor to the left or right to choose your option:</p>' +
+        "<img src='/static/images/likert_example.png', class='jspsych-instructions-image'>" +
+        '<p>[Press ENTER to begin the survey]</p></div>',
+        cont_key: 13,
+        timing_post_trial: 5
+    };
+    
+    var page_1_questions = ["What is your gender?"];
+    var page_2_questions = ["What is your highest level of education?"];
+    var page_3_questions = ["What is your race / ethnicity?"];
+
+    var scale_1 = ["Male", "I prefer not to answer", "Female"];
+    var scale_2 = ["I prefer not to answer", "Elementary school", "Middle school", "High school", "College", "Graduate/Professional school"];
+    var scale_3 = ["I prefer not to answer", "Asian", "African American", "Caucasian", "Native American", "Native Hawaiian or Pacific Islander"];
+
+    var survey_likert = {
+        type: 'survey-likert',
+        questions: [page_1_questions, page_2_questions, page_3_questions],
+        labels: [[scale_1], [scale_2], [scale_3]], // need one scale for every question on a page
+        intervals: [[3],[6],[6]],
+        show_ticks: [[true],[true],[true]]
+    };
+ 
+    /* create experiment definition array */
+    var experiment = [];
+    experiment.push(welcome_block);
+    experiment.push(game_instructions);
+    experiment.push(game_instructions_2); 
+    experiment.push(game_instructions_3);
+    experiment.push(banditTask);
+    experiment.push(debrief_block);
+    experiment.push(instructions_survey_block2);
+    experiment.push(survey_likert);
+    // experiment.push(debrief_block);
+
+
+    //Try preloading images?
+    // var images_preload = new Array()
+    // var t=0
+    // for (var ii=0; ii<5; ii++) {
+    //     for (var jj=0; jj<5; jj++) {
+    //         t++;
+    //         images_preload[t] = new Image();
+    //         images_preload[t].src = "/static/images/S" + ii + "_C" + jj + ".png";
+    //     };
+    // };
+    // /* preload the outcome images */
+
+    // preload the used stimuli
+    var images_preload = Object.keys(preload_set);
+
+
+    /* start the experiment */
+    jsPsych.preloadImages(images_preload, function(){ startExperiment(); });
+
+    function startExperiment(){
+	    jsPsych.init({
+	        display_element: $('#jspsych-target'),
+	        experiment_structure: experiment,
+	        on_finish: function(data) {
+	            psiturk.saveData({
+	                success: function () {
+	                    psiturk.completeHIT();
+	                }
+	            });
+	        },
+	        on_data_update: function(data) {
+	            psiturk.recordTrialData(data);
+	        }
+	    });
+    }
+    
+    /* Misc Code */
+    
+    function shuffleArray(array) {
+        for (var i = array.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+        return array;
+    };
+
+    function getTotalScore() {
+
+        var trials = jsPsych.data.getTrialsOfType('bandit-w-feedback');
+
+        var sum_rew = 0;
+        for (var i = 0; i < trials.length; i++) {
+          if (trials[i].key_press > 0) {
+              sum_rew += trials[i].rewOutcome;
+          }
+        }
+        return sum_rew ;
+    };
+      
+    
+  </script>
+</html>
