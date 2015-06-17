@@ -53,6 +53,12 @@
     /* load psiturk */
     var psiturk = new PsiTurk(uniqueId, adServerLoc, mode);
 
+    /* timing variables */
+    var timing_between_response_and_feedback = 0;
+    var timing_iti = 750;
+    var feedback_display_time = 1500;
+    var timing_max_response_time = 750;
+
     /* define welcome message block  */
     var welcome_block = {
         type: "text",
@@ -117,27 +123,6 @@
       timing_post_trial: 5
     }; 
     
-    // /* list feedback images for references  */    
-    // var feedbackImages = ["/static/images/fractal0.png",
-    //         "/static/images/fractal1.png",
-    //         "/static/images/fractal2.png",
-    //         "/static/images/fractal3.png",
-    //         "/static/images/fractal4.png",
-    //         "/static/images/fractal5.png",
-    //         "/static/images/fractal6.png",
-    //         "/static/images/fractal7.png",
-    //         "/static/images/fractal8.png",
-    //         "/static/images/fractal9.png",
-    //         "/static/images/fractal10.png",
-    //         "/static/images/fractal11.png",
-    //         "/static/images/fractal12.png",
-    //         "/static/images/fractal13.png",
-    //         "/static/images/fractal14.png",
-    //         ]
-    
-    // /* Randomize the identiy of feedback images */
-    // feedbackImages = shuffleArray(feedbackImages);
-    
     /* Randomize the idenity of stimuli */
     var contextKey = [0,1,2,3,4];
     contextKey = shuffleArray(contextKey);
@@ -159,17 +144,6 @@
     /* pick a game to load from file */
     games = [0,1,2,3,4,5,6,7,8,9];
     games = shuffleArray(games);
-    
-    // /* Load the pretraining regimen */
-    // var url = '../static/game' + games[0] +'_pretraining.json';
-    // var pretrainingData = [];
-    // $.ajax({
-    //   type: 'GET',
-    //   url: url,
-    //   dataType: 'json',
-    //   success: function(data) { pretrainingData = data;},
-    //   async: false
-    // });
     
     /* keep a set of all the images files to preload */
     preload_set = {};
@@ -222,23 +196,12 @@
 
         probMat.push(1);
         
-        /* set feedback image IDs */
-        // outcomeMat.push([
-        //                  feedbackImages[gameData.outcomes[ii][0]],
-        //                  feedbackImages[gameData.outcomes[ii][1]],
-        //                  feedbackImages[gameData.outcomes[ii][2]],
-        //                  feedbackImages[gameData.outcomes[ii][3]],
-        // ]);
-        
         /* set the reward outcomes */
         rewardOutcomes.push(gameData.rewards[ii]);
         
         /* Misc */
         trialTypeMat.push(gameData.trial_type[ii])        
     }
-    
-
-    
     
     
     /* Values of winning, losing*/
@@ -256,10 +219,10 @@
             prob: probMat,
             choices: ['h','j','k','l'],
             choiceKey: keyDecoder,
-            feedback_display_time: 2000,
-            timing_between_response_and_feedback: 0,
-            timing_iti: 750,
-            timing_max_response_time: 750,
+            feedback_display_time: feedback_display_time,
+            timing_between_response_and_feedback: timing_between_response_and_feedback,
+            timing_iti: timing_iti,
+            timing_max_response_time: timing_max_response_time,
             continue_after_response: true,
             show_score: true,
             prompt: "<p class='jspsych-single-stim-prompt'><br/> Press one of the following keys: <br/><br/> &#34H&#34  &nbsp; &#34J&#34 &nbsp; &#34K&#34 &nbsp; &#34L&#34 </p>",
@@ -334,20 +297,6 @@
     experiment.push(debrief_block);
     experiment.push(instructions_survey_block2);
     experiment.push(survey_likert);
-    // experiment.push(debrief_block);
-
-
-    //Try preloading images?
-    // var images_preload = new Array()
-    // var t=0
-    // for (var ii=0; ii<5; ii++) {
-    //     for (var jj=0; jj<5; jj++) {
-    //         t++;
-    //         images_preload[t] = new Image();
-    //         images_preload[t].src = "/static/images/S" + ii + "_C" + jj + ".png";
-    //     };
-    // };
-    // /* preload the outcome images */
 
     // preload the used stimuli
     var images_preload = Object.keys(preload_set);

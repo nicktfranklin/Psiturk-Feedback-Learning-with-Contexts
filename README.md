@@ -23,8 +23,7 @@ json file with object: *trials*, *rewards*, *trial\_type*
   *S* is the (integer) stimulus number and *C* is the (integer) context number (both indexes start with 0)
   
   for example: the name: value pair  
-    
-  "23": [0,1]  
+  `"23": [0,1]  `
   
   would indicate that on the 24th trials, stimulus 0 and context 1 would be shown
   
@@ -32,7 +31,7 @@ json file with object: *trials*, *rewards*, *trial\_type*
   
   for example: the name: value pair 
   
-  "23": {"0": 0, "1": 0, "2": 1, "3": 0} 
+  `"23": {"0": 0, "1": 0, "2": 1, "3": 0}` 
   
   would indicate that on the 24th trials, action "2" would be rewarded
   
@@ -40,7 +39,7 @@ json file with object: *trials*, *rewards*, *trial\_type*
   
   for example:
   
-  ["train","train","test", (...) ] 
+  `["train","train","test", (...) ] `
   
   
  
@@ -51,11 +50,39 @@ json file with object: *trials*, *rewards*, *trial\_type*
 * /static/images/university.png -- logo for the university (displayed in the add and consent form)
 
 ## Editing the experiment
-You will need to edit the experiment file */templates/exp.html* to include your instructions. There may be other edits you wish to make:
+###Instructions:
+The experiment is written with the jsPsych toolbox which can be found at [http://www.jspsych.org](http://www.jspsych.org). You will need to edit the experiment file */templates/exp.html* to include your instructions (lines 75 through 124). All of the instructions are written in jsPsych compatible variables and need to be formated in html. Each variable (labeled "instruction\_survey\_block#") corresponds to an indivdual page of instructions. To create another page, create a copy of the variable code:
 
-* To change the value of wins/lose: *templates/exp.html* change *var valueMat = [1, 0]* to *var valueMat = [W ,L]*, where *W* is the point value for correct response and *L* is the point value for incorrect responses.
-* *max\_response\_time*: Set in ms, (-1 for no limit)
-* feedback_display_time: 2000,
-* timing_between_response_and_feedback: 0,
-* timing_iti: 750,
-* timing\_max\_response\_time: 750,
+    var game_instructions_4 = {
+        type: "text",
+        text: "<div id='jspsych-instructions'>" + 
+        '<p>Instructions go here in html!".</p>' +
+        '<p>[Press ENTER to begin the survey]</p></div>',
+        cont_key: 13,
+        timing_post_trial: 5
+    }; 
+
+This new instruction block will have to be added to the experiment. In jsPsych, this can be done by "pushing" the instruction variable to the experiment. The relevant code can be found in line 291-299. If we wanted to add `game_instructions_4` to the expriment, we would add the line:
+
+`expreriment.push(game_instructions_4);` 
+
+on line 290, like so:
+    
+    /* create experiment definition array */
+    var experiment = [];
+    experiment.push(welcome_block);
+    experiment.push(game_instructions);
+    experiment.push(game_instructions_2); 
+    experiment.push(game_instructions_3);
+    experiment.push(game_instructions_4);
+    experiment.push(banditTask);
+    
+### Other edits:
+There may be other edits you wish to make, including changes to the task timing:
+
+* To change the point-value of wins and loses: change `var valueMat = [1, 0]` to v`ar valueMat = [W ,L]`, where `W` is the point value for correct response and `L` is the point value for incorrect responses.
+* Timing of Presentation: These variables can be found on lines 57-60 and are set in ms, :
+    * `feedback_display_time`: Length of time reward feedback is on screen(default 1500ms),
+    * `timing_between_response_and_feedback`: Length of time delay following response before reward feedback is on screen(default 0ms),
+    * `timing_iti`: Length of inter-trial interval (default 750ms),
+    * `timing_max_response_time`: Maximum response time allowed (default 750ms, set to -1 for no limit),
