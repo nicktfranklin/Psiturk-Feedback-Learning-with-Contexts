@@ -336,7 +336,7 @@
 
     function getTotalScore() {
 
-        var trials = jsPsych.data.getTrialsOfType('bandit-w-feedback');
+        var trials = jsPsych.data.getTrialsOfType('bandit-wo-feedback');
 
         var sum_rew = 0;
         for (var i = 0; i < trials.length; i++) {
