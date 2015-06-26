@@ -273,14 +273,14 @@
 							// Don't show score (Feedback, blank, end trial) ??? NTF: not sure what this does
 							setTimeout(function() {
 								jsPsych.finishTrial();
-							}, 250);
+							}, 0); // how long to show blank screen between fixation and trial??
 							
 						}, trial.feedback_display_time);	// How long to display feedback
 					}
 
 
-				}, 250); // how long to show blank screen between fixation and trial??
-			}, 2000);	// How long to display fixation cross
+				}, 0); 
+			}, trial.timing_iti);	// How long to display fixation cross
 		
 		};
 
